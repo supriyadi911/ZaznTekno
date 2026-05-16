@@ -808,9 +808,14 @@
                                 <span class="bg-primary text-white px-3 py-1 rounded-full text-[10px] md:text-xs font-bold uppercase mb-3 shadow-lg">${p.category}</span>
                                 <h3 class="text-xl md:text-4xl font-bold text-white mb-2 drop-shadow-lg px-4 line-clamp-2">${p.title}</h3>
                                 <p class="text-gray-300 text-xs md:text-base mb-6 max-w-3xl line-clamp-2 px-4">${p.desc}</p>
-                                <button onclick="app.showDetail('${p.id}')" class="bg-white text-gray-900 hover:bg-gray-100 font-bold py-2 px-6 md:py-2.5 md:px-8 rounded-lg shadow-xl transition transform hover:-translate-y-1 text-sm md:text-base">
-                                    <i class="fas fa-eye mr-2"></i> Lihat Detail
-                                </button>
+                                <div class="flex gap-3">
+                                    <button onclick="app.showDetail('${p.id}')" class="bg-white text-gray-900 hover:bg-gray-100 font-bold py-2 px-6 md:py-2.5 md:px-8 rounded-lg shadow-xl transition transform hover:-translate-y-1 text-sm md:text-base">
+                                        <i class="fas fa-eye mr-2"></i> Lihat Detail
+                                    </button>
+                                    <button onclick="app.shareProduct('${p.id}', event)" class="bg-[#25D366] text-white hover:bg-[#128C7E] font-bold py-2 px-4 md:py-2.5 md:px-5 rounded-lg shadow-xl transition transform hover:-translate-y-1 text-sm md:text-base" title="Bagikan via WhatsApp">
+                                        <i class="fab fa-whatsapp text-lg"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>`;
                 }).join('');
@@ -879,8 +884,13 @@
                     <div class="p-4 md:p-5 flex flex-col flex-grow">
                         <span class="text-[10px] md:text-xs text-primary font-semibold mb-1 md:mb-2 uppercase tracking-wider">${product.category}</span>
                         <h3 class="font-bold text-sm md:text-base text-gray-900 dark:text-white mb-2 line-clamp-2 leading-snug">${product.title}</h3>
-                        <div class="mt-auto pt-3 md:pt-4 border-t border-gray-100 dark:border-gray-700">
-                            ${isPromo ? `<span class="text-[10px] md:text-xs text-gray-400 line-through block">${this.formatRupiah(product.price)}</span><span class="font-bold text-base md:text-lg text-red-500">${this.formatRupiah(product.promoPrice)}</span>` : `<span class="font-bold text-base md:text-lg text-gray-900 dark:text-white">${this.formatRupiah(product.price)}</span>`}
+                        <div class="mt-auto pt-3 md:pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center">
+                            <div>
+                                ${isPromo ? `<span class="text-[10px] md:text-xs text-gray-400 line-through block">${this.formatRupiah(product.price)}</span><span class="font-bold text-base md:text-lg text-red-500">${this.formatRupiah(product.promoPrice)}</span>` : `<span class="font-bold text-base md:text-lg text-gray-900 dark:text-white">${this.formatRupiah(product.price)}</span>`}
+                            </div>
+                            <button onclick="app.shareProduct('${product.id}', event)" class="w-8 h-8 md:w-10 md:h-10 rounded-full bg-green-50 dark:bg-green-900/30 text-green-600 dark:text-green-400 hover:bg-green-100 dark:hover:bg-green-900/50 flex items-center justify-center transition" title="Bagikan penawaran via WhatsApp">
+                                <i class="fab fa-whatsapp text-lg md:text-xl"></i>
+                            </button>
                         </div>
                     </div>
                 </div>`;
@@ -956,7 +966,10 @@
                                     <button onclick="app.openCheckout('${product.id}')" ${!isAvailable ? 'disabled' : ''} class="${isAvailable ? 'bg-primary hover:bg-secondary' : 'bg-gray-400 cursor-not-allowed'} text-white font-bold py-3 px-4 md:px-6 rounded-lg shadow-lg flex-1 flex justify-center items-center gap-2 transition text-sm md:text-base"><i class="fas fa-shopping-cart"></i> ${isAvailable ? 'Pesan Sekarang' : 'Stok Habis'}</button>
                                     ${product.demo ? `<a href="${product.demo}" target="_blank" class="bg-white dark:bg-slate-700 text-gray-800 dark:text-white border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-slate-600 font-bold py-3 px-4 md:px-6 rounded-lg flex-1 flex justify-center items-center gap-2 transition text-sm md:text-base"><i class="fas fa-external-link-alt"></i> Live Demo</a>` : ''}
                                 </div>
-                                <div class="mt-4 flex gap-2"><button onclick="app.copyToClipboard()" class="text-xs md:text-sm text-gray-500 hover:text-primary"><i class="far fa-copy mr-1"></i> Salin Deskripsi</button></div>
+                                <div class="mt-4 flex flex-wrap gap-4">
+                                     <button onclick="app.copyToClipboard()" class="text-xs md:text-sm text-gray-500 hover:text-primary transition"><i class="far fa-copy mr-1"></i> Salin Deskripsi</button>
+                                     <button onclick="app.shareProduct('${product.id}', event)" class="text-xs md:text-sm text-green-600 dark:text-green-400 hover:text-green-700 dark:hover:text-green-300 transition"><i class="fab fa-whatsapp mr-1"></i> Bagikan Penawaran ke WA</button>
+                                </div>
                             </div>
                         </div>
                     </div>`;
@@ -1006,6 +1019,32 @@
                 el.select(); document.execCommand('copy');
                 document.body.removeChild(el);
                 this.showToast(successMsg);
+            },
+
+            shareProduct: function(id, e) {
+                if (e) e.stopPropagation(); // Mencegah memicu klik buka kartu detail
+                
+                const product = this.products.find(p => p.id === id);
+                if (!product) return;
+
+                const priceText = product.promoPrice 
+                    ? `~${this.formatRupiah(product.price)}~ *${this.formatRupiah(product.promoPrice)}*` 
+                    : `*${this.formatRupiah(product.price)}*`;
+                    
+                const featuresList = product.features.map(f => `✅ ${f.trim()}`).join('\n');
+                const demoText = product.demo ? `\n\n🌐 *Live Demo:*\n${product.demo}` : '';
+
+                const text = `Halo! Saya menemukan penawaran aplikasi menarik dari *ZaznTekno*.\n\n` +
+                             `📦 *${product.title}*\n` +
+                             `💰 Harga: ${priceText}\n\n` +
+                             `*Deskripsi:*\n${product.desc}\n\n` +
+                             `*Fitur Unggulan:*\n${featuresList}` +
+                             demoText + `\n\n` +
+                             `Hubungi Admin ZaznTekno untuk pemesanan:\nwa.me/${this.config.waNumber}`;
+
+                // Membuka WhatsApp Share Interface
+                const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
+                window.open(url, '_blank');
             },
 
             // ================= SETTINGS ADMIN ================= //
