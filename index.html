@@ -212,6 +212,127 @@
                 </div>
             </section>
 
+            <!-- Featured Products -->
+            <section class="py-20 bg-gray-50 dark:bg-slate-900 border-b border-gray-200 dark:border-gray-800">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="flex justify-between items-end mb-10">
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Produk Unggulan</h2>
+                            <p class="mt-2 text-gray-600 dark:text-gray-400">Aplikasi paling laris bulan ini.</p>
+                        </div>
+                        <button onclick="app.navigate('catalog')" class="hidden sm:block text-primary font-medium hover:underline">Lihat Semua <i class="fas fa-arrow-right text-sm"></i></button>
+                    </div>
+                    
+                    <div id="featured-products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                        <!-- Featured products injected via JS -->
+                    </div>
+                    
+                    <button onclick="app.navigate('catalog')" class="w-full mt-8 sm:hidden bg-white dark:bg-slate-800 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-white py-3 rounded-lg font-medium shadow-sm">Lihat Semua Produk</button>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section id="features" class="py-20 bg-white dark:bg-dark border-b border-gray-200 dark:border-gray-800">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-16">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Mengapa Memilih Produk Kami?</h2>
+                        <p class="mt-4 text-gray-600 dark:text-gray-400">Layanan profesional dengan standar kualitas tinggi untuk menjamin kelancaran bisnis Anda.</p>
+                    </div>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="bg-gray-50 dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition">
+                            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/40 rounded-lg flex items-center justify-center text-primary text-xl mb-6">
+                                <i class="fas fa-bolt"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Siap Pakai & Cepat</h3>
+                            <p class="text-gray-600 dark:text-gray-400">Source code langsung dapat digunakan dan di-deploy tanpa perlu konfigurasi rumit.</p>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition">
+                            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/40 rounded-lg flex items-center justify-center text-primary text-xl mb-6">
+                                <i class="fas fa-code"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Clean Code & Modern</h3>
+                            <p class="text-gray-600 dark:text-gray-400">Ditulis menggunakan standar industri terbaru, rapi, dan mudah dikembangkan (scalable).</p>
+                        </div>
+                        <div class="bg-gray-50 dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 hover:shadow-md transition">
+                            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/40 rounded-lg flex items-center justify-center text-primary text-xl mb-6">
+                                <i class="fas fa-headset"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900 dark:text-white mb-3">Support Responsif</h3>
+                            <p class="text-gray-600 dark:text-gray-400">Bantuan instalasi dan konsultasi error melalui grup WhatsApp atau private chat.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ================= CAROUSEL SEMUA PRODUK (FADE) ================= -->
+            <section id="carousel-section" class="py-20 bg-gray-50 dark:bg-slate-900 border-b border-gray-200 dark:border-gray-800">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="text-center mb-10">
+                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">Koleksi Lengkap Kami</h2>
+                        <p class="mt-2 text-gray-600 dark:text-gray-400">Geser untuk melihat semua produk digital terbaik.</p>
+                    </div>
+                    
+                    <div class="relative w-full max-w-5xl mx-auto h-[400px] md:h-[450px] rounded-2xl overflow-hidden shadow-2xl bg-gray-900 group" id="product-carousel">
+                        <!-- Carousel Content -->
+                        <div id="carousel-fade-content" class="w-full h-full relative">
+                            <!-- Injected by JS -->
+                        </div>
+
+                        <!-- Controls -->
+                        <button onclick="app.prevSlide()" class="absolute left-4 top-1/2 -translate-y-1/2 z-30 bg-black/40 hover:bg-black/60 text-white p-3 md:p-4 rounded-full backdrop-blur-md opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                            <i class="fas fa-chevron-left text-lg md:text-xl"></i>
+                        </button>
+                        <button onclick="app.nextSlide()" class="absolute right-4 top-1/2 -translate-y-1/2 z-30 bg-black/40 hover:bg-black/60 text-white p-3 md:p-4 rounded-full backdrop-blur-md opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-300">
+                            <i class="fas fa-chevron-right text-lg md:text-xl"></i>
+                        </button>
+
+                        <!-- Indicators -->
+                        <div id="carousel-indicators" class="absolute bottom-6 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Section er:bg-secondary text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:shadow-xl transition duration-300 transform hover:-translate-y-1">
+                                    Jelajahi Produk <i class="fas fa-arrow-right ml-2"></i>
+                                </button>
+                                <a href="#features" class="bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700 text-gray-800 dark:text-white border border-gray-200 dark:border-gray-700 font-semibold py-3 px-8 rounded-lg transition duration-300">
+                                    Lihat Fitur
+                                </a>
+                            </div>
+                        </div>
+                        <div class="flex relative justify-center items-center mt-12 lg:mt-0 px-4 sm:px-0">
+                            <!-- Professional Photo Frame -->
+                            <div class="relative z-10 w-full max-w-[260px] sm:max-w-sm xl:max-w-md mx-auto">
+                                <!-- Background decoration -->
+                                <div class="absolute top-3 -right-3 sm:top-4 sm:-right-4 w-full h-full border-2 border-primary rounded-2xl z-0"></div>
+                                
+                                <!-- Main Image -->
+                                <div class="relative z-10 bg-white dark:bg-slate-800 p-1.5 sm:p-2 lg:p-3 rounded-2xl shadow-2xl transition-transform hover:-translate-y-2 duration-300">
+                                    <img src="https://i.ibb.co.com/8nJgDJ5N/foto-biru-supriyadi.png" alt="Supriyadi - Founder ZaznTekno" class="w-full h-auto object-cover rounded-xl" onerror="this.src='https://images.unsplash.com/photo-1560250097-0b93528c311a?q=80&w=800&auto=format&fit=crop'">
+                                </div>
+                                
+                                <!-- Floating Trust Badge -->
+                                <div class="absolute -bottom-4 -left-2 sm:-bottom-6 sm:-left-4 lg:-left-8 bg-white dark:bg-slate-800 p-2 sm:p-3 lg:p-4 rounded-xl shadow-xl flex items-center gap-2 sm:gap-3 lg:gap-4 border border-gray-100 dark:border-gray-700 z-20">
+                                    <div class="w-8 h-8 sm:w-10 sm:h-10 lg:w-12 lg:h-12 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center shrink-0">
+                                        <i class="fas fa-check-circle text-green-600 dark:text-green-400 text-base sm:text-lg lg:text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <p class="text-[9px] sm:text-[10px] lg:text-xs text-gray-500 dark:text-gray-400 font-medium uppercase tracking-wider">Founder / CEO</p>
+                                        <p class="font-bold text-xs sm:text-sm lg:text-base text-gray-900 dark:text-white line-clamp-1">Supriyadi</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Decorative elements -->
+                            <div class="absolute -top-6 -right-6 w-24 h-24 bg-blue-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob z-0"></div>
+                            <div class="absolute -bottom-8 -left-8 w-32 h-32 bg-purple-400 rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000 z-0"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
             <!-- Featured Products (Moved below Hero) -->
             <section class="py-20 bg-gray-50 dark:bg-slate-900 border-b border-gray-200 dark:border-gray-800">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
